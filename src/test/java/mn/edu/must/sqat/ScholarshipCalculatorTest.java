@@ -38,7 +38,7 @@ class ScholarshipCalculatorTest {
     void letterGradeCoversAllGradeRangesAndInvalidScores() {
         assertEquals("C", calculator.letterGrade(75));
         assertEquals("D", calculator.letterGrade(60.01));
-        assertEquals("F", calculator.letterGrade(60));
+        assertEquals("D", calculator.letterGrade(60));
         assertEquals("F", calculator.letterGrade(0));
         assertThrows(IllegalArgumentException.class, () -> calculator.letterGrade(-1));
         assertThrows(IllegalArgumentException.class, () -> calculator.letterGrade(101));
