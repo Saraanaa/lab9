@@ -1,7 +1,7 @@
 # Lab 09 - JaCoCo coverage
 
-Student name: Saraanaa  
-Student code: not provided
+Student name: Г. Саранчимэг  
+Student code: B232274001
 
 ## Environment
 
