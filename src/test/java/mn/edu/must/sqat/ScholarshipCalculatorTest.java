@@ -66,4 +66,19 @@ class ScholarshipCalculatorTest {
         assertThrows(IllegalArgumentException.class, () -> calculator.scholarship(4.1, 0, false));
         assertThrows(IllegalArgumentException.class, () -> calculator.scholarship(3.0, -1, false));
     }
+
+    @Test
+    void gpaRejectsAnEmptyArray() {
+        assertThrows(IllegalArgumentException.class, () -> calculator.gpa(new double[]{}));
+    }
+
+    @Test
+    void gpaHandlesOneScore() {
+        assertEquals(4.0, calculator.gpa(new double[]{95}));
+    }
+
+    @Test
+    void gpaHandlesTwoOrMoreScores() {
+        assertEquals(2.5, calculator.gpa(new double[]{95, 85, 75, 65}));
+    }
 }
