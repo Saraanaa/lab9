@@ -1,9 +1,9 @@
-# Lab 09 - JaCoCo coverage
+# Лаборатори 09 — JaCoCo ашиглан кодын хамралт хэмжих
 
-Student name: Saraanaa  
-Student code: not provided
+Оюутны нэр: Saraanaa  
+Оюутны код: оруулаагүй
 
-## Environment
+## Ажлын орчин
 
 ```text
 java version "22.0.2" 2024-07-16
@@ -12,33 +12,43 @@ Java HotSpot(TM) 64-Bit Server VM (build 22.0.2+9-70, mixed mode, sharing)
 
 Apache Maven 3.9.11
 Java version: 22.0.2
-OS name: Windows 11, arch: amd64
+Үйлдлийн систем: Windows 11, amd64
 ```
 
-## A - Happy path
+## A хэсэг — Үндсэн үйлдлийн тестүүд
 
-Five initial JUnit tests cover the main successful flows: A and B grades, GPA for two scores, full scholarship, and the violation rule. The result is stored in `results/mvn-verify-A.txt` and `results/jacoco-A.csv`. The initial report shows 14/25 lines and 18/41 branches covered; the uncovered red paths are mainly validation, lower grades, and scholarship alternatives.
+Эхний таван JUnit тестээр үндсэн амжилттай үйлдлүүдийг шалгасан. Үүнд A болон B үнэлгээ, хоёр онооны голч дүн, бүрэн тэтгэлэг, мөн зөрчилтэй оюутанд тэтгэлэг олгохгүй байх дүрэм багтсан. Гүйцэтгэлийн гаралт [results/mvn-verify-A.txt](results/mvn-verify-A.txt), JaCoCo-ийн хүснэгт [results/jacoco-A.csv](results/jacoco-A.csv) файлд хадгалагдсан. Эхний тайланд 25 мөрөөс 14, 41 салааллаас 18 нь хамрагдсан. Хамрагдаагүй замууд нь ихэвчлэн буруу утгын шалгалт, бага үнэлгээ болон тэтгэлгийн бусад хувилбарууд байсан.
 
-## B - CFG and 100% coverage
+## B хэсэг — CFG ба 100 хувийн хамралт
 
-`cfg.png` shows the control-flow graph for `scholarship()`. Additional tests cover every grade case, every scholarship award, all validation exceptions, and all short-circuit sides. `results/mvn-verify-B.txt` records 9 passing tests. `results/jacoco-B.csv` has `BRANCH_MISSED=0` and `LINE_MISSED=0`.
+[cfg.png](cfg.png) зурагт `scholarship()` функцийн удирдлагын урсгалын график буюу CFG-г үзүүлсэн. Нэмэлт тестүүдээр бүх үнэлгээний муж, тэтгэлгийн бүх хэмжээ, бүх буруу оролтын exception, мөн богино залгаатай нөхцөлүүдийн салааллыг шалгасан. [results/mvn-verify-B.txt](results/mvn-verify-B.txt) файлд 9 тест бүгд амжилттай ажилласныг хадгалсан. [results/jacoco-B.csv](results/jacoco-B.csv) файлд `BRANCH_MISSED=0`, `LINE_MISSED=0` байна.
 
-## C - Boundary tests
+## C хэсэг — Хязгаарын утгын тестүүд
 
-The GPA tests explicitly cover the three required input-size boundaries:
+`gpa()` функцийн массивын хэмжээнээс хамаарах дараах гурван заагийг тусгайлан шалгасан:
 
-- zero items: an empty array throws `IllegalArgumentException`;
-- one item: `gpa([95]) == 4.0`;
-- two or more items: `gpa([95, 85, 75, 65]) == 2.5`.
+- 0 утга: хоосон массив өгвөл `IllegalArgumentException` шиднэ;
+- 1 утга: `gpa([95]) == 4.0`;
+- 2 ба түүнээс олон утга: `gpa([95, 85, 75, 65]) == 2.5`.
 
-These tests do not add a new branch because the existing B tests already covered the same paths, but they document the boundary requirement clearly.
+B хэсгийн тестүүд эдгээр замуудыг аль хэдийн хамруулсан тул C хэсгийн тестүүд шинэ салаалал нэмээгүй. Гэхдээ шаардсан хязгаарын тохиолдлуудыг тусад нь ойлгомжтой баримтжуулсан.
 
-## D - Specification bug and fix
+## D хэсэг — Спецификацийн алдааг илрүүлж зассан нь
 
-The initial implementation used `score > 60`, so the valid boundary score `60` incorrectly returned `F`. The D test exposed `expected: <D> but was: <F>`; the original failing run is preserved in `results/mvn-test-D-fail.txt`. The fix changed the condition to `score >= 60` in a separate D commit. The final run has 12 passing tests and `results/jacoco-final.csv` reports `BRANCH_MISSED=0` and `LINE_MISSED=0`.
+Анхны кодонд `score > 60` гэж бичигдсэн байсан тул зөвшөөрөгдөх 60 оноо буруугаар `F` үнэлгээ буцааж байсан. D хэсгийн тест энэ алдааг `expected: <D> but was: <F>` гэсэн үр дүнгээр илрүүлсэн. Унасан тестийн анхны гаралтыг [results/mvn-test-D-fail.txt](results/mvn-test-D-fail.txt) файлд хадгалсан. Дараа нь нөхцөлийг `score >= 60` болгон зассан бөгөөд засвар нь тусдаа D commit-оор хийгдсэн.
 
-Coverage is evidence that executed branches and lines were exercised; it is not proof that the specification is correct. The boundary test was necessary to reveal this semantic error even though the earlier report already showed 100% branch coverage.
+Эцсийн ажиллуулалтаар 12 тест бүгд амжилттай болсон. [results/jacoco-final.csv](results/jacoco-final.csv) файлд `BRANCH_MISSED=0`, `LINE_MISSED=0` байна. Кодын хамралт нь ажилласан мөр болон салааллыг хэмждэг болохоос спецификаци зөв гэдгийг дангаараа баталдаггүй. Энэ жишээнд 100 хувийн хамралттай байсан ч 60 гэсэн заагийн утгын тусгай тест семантик алдааг илрүүлсэн.
 
-## AI disclosure
+## Ашигласан файлууд
 
-AI assistance was used to organize the JUnit tests, interpret the JaCoCo CSV output, and draft the CFG/README. The code was run locally, the failing boundary test was observed, and the final fix and reports were verified with Maven.
+- `results/mvn-verify-A.txt` — A хэсгийн Maven гаралт;
+- `results/jacoco-A.csv` — A хэсгийн JaCoCo хүснэгт;
+- `results/mvn-verify-B.txt` — B хэсгийн Maven гаралт;
+- `results/jacoco-B.csv` — B хэсгийн JaCoCo хүснэгт;
+- `results/mvn-test-D-fail.txt` — засварын өмнөх унасан тестийн гаралт;
+- `results/mvn-verify-final.txt` — засварын дараах эцсийн Maven гаралт;
+- `results/jacoco-final.csv` — эцсийн JaCoCo хүснэгт.
+
+## AI ашигласан тухай
+
+JUnit тестүүдийг зохион байгуулах, JaCoCo-ийн CSV гаралтыг тайлбарлах, CFG болон README-г бэлтгэхэд AI тусламж ашигласан. Кодыг локал орчинд ажиллуулж, унасан хязгаарын тестийг бодитоор шалгасан. Эцсийн засвар болон тайлангуудыг Maven ашиглан баталгаажуулсан.
