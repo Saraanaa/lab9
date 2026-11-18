@@ -10,9 +10,12 @@ java version "22.0.2" 2024-07-16
 Java(TM) SE Runtime Environment (build 22.0.2+9-70)
 Java HotSpot(TM) 64-Bit Server VM (build 22.0.2+9-70, mixed mode, sharing)
 
-Apache Maven 3.9.11
+Apache Maven 3.9.11 (3e54c93a704957b63ee3494413a2b544fd3d825b)
+Maven home: C:\Users\lunay\AppData\Local\Temp\apache-maven-3.9.11
 Java version: 22.0.2
-Үйлдлийн систем: Windows 11, amd64
+Vendor: Oracle Corporation
+Default locale: en_US, platform encoding: UTF-8
+OS name: "Windows 11", version: "10.0", arch: "amd64", family: "windows"
 ```
 
 ## A хэсэг — Үндсэн үйлдлийн тестүүд
